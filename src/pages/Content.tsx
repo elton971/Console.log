@@ -28,7 +28,6 @@ export const Content=()=>{
         'https://api-us-west-2.hygraph.com/v2/cl7aqqsoz38nx01uhhqo5cbnn/master',
         `
         query data {
-        
             post(where: {slug: "${name}"}) {
               autor
               content {
