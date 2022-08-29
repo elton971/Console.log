@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import { NavBar } from './components/NavBar'
 import { NewCard } from './components/NewCard';
 import { Content } from './pages/Content';
+import { ApolloClient, gql, InMemoryCache } from "@apollo/client"
 
 interface inpost{
   id: string
@@ -18,39 +19,44 @@ interface inpost{
   autor:string
 }
 
+const client = new ApolloClient({
+  uri:'https://api-us-west-2.hygraph.com/v2/cl7aqqsoz38nx01uhhqo5cbnn/master',
+  cache: new InMemoryCache()
+})
+
+const GET_POSTS_QUERY=gql`
+query dados{
+  posts(orderBy: publishedAt_DESC) {
+    createdAt
+    id
+    slug
+    title
+    createdAt
+    description
+    {
+      text
+    }
+    autor
+  }
+}
+
+`
 
 function App() {
 
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     setIsLoading(true)
     const fetchProducts = async () => {
-      const  results  = await request(
-        'https://api-us-west-2.hygraph.com/v2/cl7aqqsoz38nx01uhhqo5cbnn/master',
-        `
-        query datas{
-          posts(orderBy: publishedAt_DESC) {
-            createdAt
-            id
-            slug
-            title
-            createdAt
-            description
-            {
-              text
-            }
-            autor
-            
-            
-          }
-        }
-    `
-      );
+    const  data  = await client.query({
+        query: GET_POSTS_QUERY,
+      });
       setIsLoading(false)
-      setPosts(results.posts);
-    };
+      setPosts(data.data.posts)
+    }
+    
 
     fetchProducts();
   }, []);
