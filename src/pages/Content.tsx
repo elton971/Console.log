@@ -1,9 +1,19 @@
+import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
 import { CircularProgress, Rating, Stack } from "@mui/material";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import request from "graphql-request";
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
+
+
+const client = new ApolloClient({
+  uri:'https://api-us-west-2.hygraph.com/v2/cl7aqqsoz38nx01uhhqo5cbnn/master',
+  cache: new InMemoryCache()
+})
+
+
 
 
 export const Content=()=>{
@@ -19,35 +29,36 @@ export const Content=()=>{
     title: ""
   });
   const { name } = useParams()
+
+
+const GET_POSTS_QUERY=gql`
+query dados{
+  post(where: {slug: "${name}"}) {
+    autor
+    content {
+      html
+    }
+    createdAt
+    title
+  }
+}
+`
   
   useEffect(() => {
     setIsLoading(true)
     const fetchProducts = async () => {
-      
-      const  results  = await request(
-        'https://api-us-west-2.hygraph.com/v2/cl7aqqsoz38nx01uhhqo5cbnn/master',
-        `
-        query data {
-            post(where: {slug: "${name}"}) {
-              autor
-              content {
-                html
-              }
-              createdAt
-              title
-            }
-        }
-    `
-      );
+    const  data  = await client.query({
+        query: GET_POSTS_QUERY,
+      });
       setIsLoading(false)
+      console.log(data.data.post)
+      setPost(data.data.post)
+    	setDate(format(new Date(data.data.post.createdAt), "EEE' - 'd' de 'MMMM'", {locale: ptBR,}))
 
-      setPost(results.post);
-      setDate(format(new Date(results.post.createdAt), "EEE' - 'd' de 'MMMM'", {locale: ptBR,}))
-
-    };
-
+    }
     fetchProducts();
   }, []);
+  
     
   
     return(
