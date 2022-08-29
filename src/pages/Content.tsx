@@ -52,7 +52,7 @@ export const Content=()=>{
     
   
     return(
-        <main className="max-w-7xl mx-auto p-10">
+        <main className="max-w-7xl mx-auto p-6">
             {
                 
                  isLoading ? (

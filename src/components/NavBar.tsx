@@ -10,7 +10,7 @@ export const NavBar=()=>{
     return(
         <header className="bg-white text-black border-b-8 ">
             <nav className="p-5">
-                <div className="flex justify-between mx-5 md:mx-10">
+                <div className="flex justify-between  md:mx-10">
                     <Link to="/">
                         <h1 className='font-bold text-[1.5rem] hoverLink cursor-pointer'>
                             <span className="text-rose-900 ">Console</span>
