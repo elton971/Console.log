@@ -10,11 +10,12 @@ interface BlogCardProps {
     publishedDate: string
     description: string
     autor:string
+    imagem:string
     
 }
 
 const limit=300
-export const NewCard=( { title, publishedDate, description, slug,autor }:BlogCardProps )=>{
+export const NewCard=( { title, publishedDate, description, slug,autor,imagem }:BlogCardProps )=>{
     const aboveLimit = description.length > limit
     const dotsOrEmpty = aboveLimit ? "..." : ""
 
@@ -29,6 +30,9 @@ export const NewCard=( { title, publishedDate, description, slug,autor }:BlogCar
             <div className="text-gray-500">
                 <span className="">{ publishedDateFormatted.toUpperCase() }  - </span>
                 <span>{autor.toUpperCase()}</span>
+            </div>
+            <div className="w-full h-60" >
+                <img src={imagem} alt="" className="h-60 w-full object-cover" />
             </div>
 
             <p className="mt-2 text-gray-900 text-[1.2rem] ">{ description.substring(0, limit) + dotsOrEmpty }</p>

@@ -17,6 +17,7 @@ interface inpost{
     text: string
   }
   autor:string
+  ima:string
 }
 
 const client = new ApolloClient({
@@ -37,6 +38,7 @@ query dados{
       text
     }
     autor
+    ima
   }
 }
 
@@ -83,6 +85,7 @@ function App() {
                     publishedDate={post.createdAt}
                     description={post.description.text}
                     autor={post.autor}
+                    imagem={post.ima}
                     />
                 )
               })

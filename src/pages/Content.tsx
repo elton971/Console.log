@@ -40,6 +40,7 @@ query dados{
     }
     createdAt
     title
+    
   }
 }
 `
