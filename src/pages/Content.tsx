@@ -25,7 +25,7 @@ export const Content=()=>{
     content:{
       html:""
     },
-    createdAt:"hello",
+    createdAt:"",
     title: ""
   });
   const { name } = useParams()
