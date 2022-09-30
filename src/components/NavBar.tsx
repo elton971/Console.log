@@ -1,5 +1,5 @@
 
-import { Button, IconButton,  SvgIcon } from '@mui/material';
+import { Button,  SvgIcon } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
@@ -28,9 +28,21 @@ export const NavBar=()=>{
                                 <SvgIcon component={ListRoundedIcon} inheritViewBox />
                             </Button>
                             <Menu {...bindMenu(popupState)}>
-                                <MenuItem onClick={popupState.close}>Home</MenuItem>
-                                <MenuItem onClick={popupState.close}>About</MenuItem>
-                                <MenuItem onClick={popupState.close}>Contact</MenuItem>
+                                <MenuItem onClick={popupState.close}>
+                                    <Link to="/">
+                                        Home
+                                    </Link>
+                                </MenuItem>
+                                <MenuItem onClick={popupState.close}>
+                                    <Link to="/contact">
+                                    Contact
+                                    </Link>
+                                </MenuItem>
+                                <MenuItem onClick={popupState.close}>
+                                    <Link to="/login">
+                                        Login
+                                    </Link>
+                                </MenuItem>
                             </Menu>
                         </React.Fragment>
                     )}

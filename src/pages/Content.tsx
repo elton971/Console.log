@@ -63,7 +63,7 @@ query dados{
     
   
     return(
-        <main className="max-w-7xl mx-auto p-6">
+        <main className="max-w-7xl mx-auto p-6 ">
             {
                 
                  isLoading ? (
@@ -75,22 +75,26 @@ query dados{
                         <div className="flex justify-center">
                           <h1 className="font-bold text-[1.8rem]">{post.title}</h1>
                         </div>
-                        <div
-                            className="content "
-                            dangerouslySetInnerHTML={{ __html: post.content.html }}>
+                        <div className="flex justify-center items-center">
+                          <div
+                              className="content  w-[80%] "
+                              dangerouslySetInnerHTML={{ __html: post.content.html }}>
+                          </div>
                         </div>
-                         <div>
-                            
-                          <span className="text-red-600 font-bold">{date}</span>
-                          <p className="font-bold">Publicando por: <span className="text-red-900 font-mono">{post.autor}</span></p>
-                        </div>
-                        <div className="mt-10">
-                            <p className="text-lg">Classifique</p>
-                        </div>
-                        <div className="mb-5">    
-                            <Stack spacing={1}>
-                                <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
-                            </Stack>
+
+                        <div  className="ml-32">
+                          <div>
+                            <span className="text-red-600 font-bold">{date}</span>
+                            <p className="font-bold">Publicando por: <span className="text-red-900 font-mono">{post.autor}</span></p>
+                          </div>
+                          <div className="mt-10">
+                              <p className="text-lg">Classifique</p>
+                          </div>
+                          <div className="mb-5">
+                              <Stack spacing={1}>
+                                  <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
+                              </Stack>
+                          </div>
                         </div>
                         
                     </div>

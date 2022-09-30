@@ -24,6 +24,9 @@
 .content :not(pre) > code[class*="language-"] {
     @apply px-4 py-2 rounded-md
 }
+.bordered{
+    @apply border mt-4 p-5  w-80  justify-center flex border-black
+}
 
 .content pre[class*="language-"] {
     @apply w-full overflow-x-scroll rounded-md
