@@ -29,7 +29,7 @@ export const NavBar=()=>{
                             </Button>
                             <Menu {...bindMenu(popupState)}>
                                 <MenuItem onClick={popupState.close}>
-                                    <Link to="/">
+                                    <Link to="/home">
                                         Home
                                     </Link>
                                 </MenuItem>
@@ -39,7 +39,7 @@ export const NavBar=()=>{
                                     </Link>
                                 </MenuItem>
                                 <MenuItem onClick={popupState.close}>
-                                    <Link to="/login">
+                                    <Link to="/">
                                         Login
                                     </Link>
                                 </MenuItem>
