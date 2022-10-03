@@ -2,19 +2,14 @@ import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
 import { CircularProgress, Rating, Stack } from "@mui/material";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-
+import { NavBar } from '../components/NavBar'
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
-
 
 const client = new ApolloClient({
   uri:'https://api-us-west-2.hygraph.com/v2/cl7aqqsoz38nx01uhhqo5cbnn/master',
   cache: new InMemoryCache()
 })
-
-
-
 
 export const Content=()=>{
   const [isLoading, setIsLoading] = useState(false)
@@ -63,10 +58,12 @@ query dados{
     
   
     return(
+      <div className="bg-[#ffffff] h-full min-h-screen">
+        <NavBar/>
         <main className="max-w-7xl mx-auto p-6 ">
             {
                 
-                 isLoading ? (
+                isLoading ? (
                     <div className="flex justify-center items-center m-[15rem]">
                       <CircularProgress/>
                     </div>
@@ -102,5 +99,6 @@ query dados{
             }
             
         </main>
+      </div>
     )
 }

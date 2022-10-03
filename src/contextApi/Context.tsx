@@ -1,8 +1,8 @@
 
 import { useState, createContext, useEffect, ReactNode } from "react";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup,createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
 import { app } from "../components/FireBase";
-import { Navigate } from "react-router-dom";
+
 const provider = new GoogleAuthProvider();
 
 
@@ -15,11 +15,14 @@ interface AuthContextData {
     users:any;
     signInGoogle:()=>void;
     signOut:()=>void;
+    createAccountEmainPass:(email:string,password:string)=>void;
+    loginWithEmailPass:(email:string,password:string)=>void;
 }
 
 export const AuthGoogleContext = createContext({} as AuthContextData);
 
 export const AuthGoogleProvider = ({ children }:AuthProviderProps) => {
+    
 
   const auth = getAuth(app);
   const [users, setUser] = useState<any>();
@@ -35,15 +38,15 @@ export const AuthGoogleProvider = ({ children }:AuthProviderProps) => {
     loadStorageData();
   });
 
-  function signInGoogle() {
-    signInWithPopup(auth, provider)
+  //auth usando google account=================
+  async function signInGoogle() {
+    await signInWithPopup(auth, provider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
-        setUser(user);
-        sessionStorage.setItem("@AuthFirebase:token", token);
-        sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
+
+        
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -56,9 +59,43 @@ export const AuthGoogleProvider = ({ children }:AuthProviderProps) => {
   function signOut() {
     sessionStorage.clear();
     setUser(null);
-    return <Navigate to="/" />;
+  }
+  //==========================================
+
+  //auth usando email e passs=======================================
+  async function createAccountEmainPass(email: string,password: string) {
+   await  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+    
   }
 
+
+  async function loginWithEmailPass(email: string,password: string)
+  {
+    await signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+  }
+
+
+  //===============================================================
   return (
     <AuthGoogleContext.Provider
       value={{
@@ -66,6 +103,8 @@ export const AuthGoogleProvider = ({ children }:AuthProviderProps) => {
         users,
         signInGoogle,
         signOut,
+        createAccountEmainPass,
+        loginWithEmailPass
       }}
     >
       {children}
