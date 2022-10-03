@@ -42,8 +42,8 @@ export const AuthGoogleProvider = ({ children }:AuthProviderProps) => {
   async function signInGoogle() {
     await signInWithPopup(auth, provider)
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+        const credential = GoogleAuthProvider.credentialFromResult(result)!;
+        const token = credential.accessToken 
         const user = result.user;
 
         
