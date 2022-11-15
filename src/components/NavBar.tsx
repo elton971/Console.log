@@ -6,6 +6,7 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import ListRoundedIcon from '@mui/icons-material/ListRounded';
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 export const NavBar=()=>{
     return(
         <header className="bg-white text-black border-b-8 ">

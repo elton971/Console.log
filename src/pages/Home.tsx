@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { NavBar } from '../components/NavBar'
 import { NewCard } from '../components/NewCard';
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client"
+import {Slide} from "../components/Slide";
 
 interface inpost{
   id: string
@@ -59,8 +60,9 @@ export function Home() {
   }, []);
   
     return(
-      <div className="bg-[#ffffff] h-full min-h-screen">
+      <div className=" h-full min-h-screen  bg-gray-100">
         <NavBar/>
+        <Slide posts={posts}/>
         {
               isLoading ? (
                 <div className="flex justify-center items-center m-[15rem]">
