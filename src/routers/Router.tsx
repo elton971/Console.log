@@ -11,10 +11,10 @@ export default function Router() {
     <BrowserRouter>
         <Fragment>
             <Routes >
-                <Route path="/home" element={<Home/>} />
+                <Route path="/" element={<Home/>} />
                 <Route path="/post/:name" element={<Content/>} />
                 <Route path="/contact" element={<About/>} />
-                <Route path="/" element={<Login/>}  />
+                <Route path="/login" element={<Login/>}  />
                 <Route path="/singin" element={<SingIn/>} />
             </Routes> 
         </Fragment>

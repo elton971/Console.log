@@ -57,14 +57,12 @@ export function Slide(props:any)
                 props.posts.map((post:IPosts)=>{
                     return (
                         <Link to={`/post/${post.slug}`}>
-                            <div className={`relative  h-[25rem]`}>
-                                <img src={post.ima} className={' blur-md invert  w-full object-cover'}/>
-                                <div className={'absolute  top-[30%]  translate-x-2/3 translate-y-0  text-center'}>
+                            <div className={`relative  h-[25rem] `}>
+                                <img src={post.ima} className={'blur-md opacity-90 w-full object-cover'}/>
+                                <div className={'absolute  top-[35%]  translate-x-2/3 translate-y-0  text-center'}>
                                     <div className={'w-[36rem]'}>
-                                        <p className={'text-black text-[3rem] ' }>{post.title.toUpperCase()}</p>
-                                        <p className={'text-white text-[2rem] '}>{post.description.text.substring(0,50)}</p>
+                                        <p className={'text-black text-[3rem] ' }>{post.title}</p>
                                     </div>
-
                                 </div>
                             </div>
                         </Link>

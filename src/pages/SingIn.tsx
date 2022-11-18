@@ -1,46 +1,80 @@
 
-import { Link } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { AuthGoogleContext } from '../contextApi/Context';
+import {NavBar} from "../components/NavBar";
+import {Footer} from "../components/Footer";
 
 export const SingIn=()=>{
 
     const {createAccountEmainPass}=useContext(AuthGoogleContext);
     const [email,setEmail]=useState('');
-    const [passWord,setPassWord]=useState('');
+    const [password,setPassword]=useState('');
+    const [reapetPassword,setRepeatPassWord]=useState('');
+
+    const [control,setControl]=useState(false);
+    const router=useNavigate();
 
     const test=()=>{
-        createAccountEmainPass(email,passWord);
+        if(password==reapetPassword)
+        {
+            if(createAccountEmainPass(email,password))
+            {
+                router("/login")
+            }
+        }
+        else{
+            setControl(true);
+        }
     }
-   
+
     return(
-        <div className="flex justify-center items-center mt-12">
-            <div className="">
-                    <div className="flex justify-center">
-                        <h1 className="text-4xl font-bold mb-5">Sing In</h1>
+        <div >
+            <NavBar/>
+            <div className="flex justify-center ">
+                <div className=" my-9 w-[40rem]">
+                    <div  className={"p-5"}>
+                    <div className="mb-2">
+                        <h1 className="text-4xl font-bold mb-5">Cadastro</h1>
                     </div>
-                    <div className=" flex flex-col gap-1 mb-5">
-                        <label className="text-lg font-bold" >Email</label>
-                        <input type="email" id="username" placeholder="exemplo@gmail.com" 
-                            className=" border-b-2 outline-none py-2" 
-                            onChange={(e)=>{setEmail(e.target.value);}}    
-                        />
-                    </div>
+                    <form onSubmit={test}>
+                        <div className=" flex flex-col gap-1 mb-5">
+                            <label className="text-base font-semibold mb-1 " >Email</label>
+                            <input type="email" id="username" placeholder="exemplo@gmail.com"
+                                   className=" border-2 p-2 rounded-md  "
+                                   onChange={(e)=>{setEmail(e.target.value);}}
+                                   formNoValidate
+                            />
+                        </div>
 
-                    <div className=" flex flex-col gap-1 mb-5">
-                        <label className="text-lg font-bold">Password</label>
-                        <input type="password" id="password" placeholder="Password" 
-                            className=" border-b-2 outline-none py-2"
-                            onChange={(e)=>{setPassWord(e.target.value);}}
-                        />
-                    </div>
+                        <div className=" flex flex-col gap-1 mb-2">
+                            <label className="text-base font-semibold">Password</label>
 
-                    <div className=" flex flex-col">
-                        <Link to="/" onClick={test} className="bordered text-white  border-none shadow-md shadow-black bg-gray-500 hover:bg-gray-700 transition" >
-                            Regitrar
-                        </Link>
+                            <input type="password" id="password" placeholder="Password"
+                                   className=" border-2 p-2 rounded-md"
+                                   onChange={(e)=>{setPassword(e.target.value);}}
+                            />
+                        </div>
+
+                        <div className=" flex flex-col gap-1 mb-2">
+                            <label className="text-base font-semibold">Repita a senha</label>
+
+                            <input type="password" id="passwordR" placeholder="Senha"
+                                   className=" border-2 p-2 rounded-md"
+                                   onChange={(e)=>{setRepeatPassWord(e.target.value);}}
+                            />
+                        </div>
+                        <div className={'flex flex-col'}>
+                        <button type="button" onClick={test}
+                                className="bordered text-white rounded-md border-none bg-[#2C974B]  transition">
+                            Cadastrar
+                        </button>
+                        </div>
+                    </form>
                     </div>
+                </div>
             </div>
+            <Footer/>
         </div>
     )
 }

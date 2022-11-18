@@ -5,6 +5,7 @@ import { NavBar } from '../components/NavBar'
 import { NewCard } from '../components/NewCard';
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client"
 import {Slide} from "../components/Slide";
+import {Footer} from "../components/Footer";
 
 interface inpost{
   id: string
@@ -58,36 +59,36 @@ export function Home() {
     }
     fetchProducts();
   }, []);
-  
+
     return(
-      <div className=" h-full min-h-screen  bg-gray-100">
+      <div className=" h-full min-h-screen ">
         <NavBar/>
-        <Slide posts={posts}/>
         {
-              isLoading ? (
-                <div className="flex justify-center items-center m-[15rem]">
-                  <CircularProgress/>
-                </div>
-              ):(
-                <div className="max-w-4xl mx-auto md:p-0 p-10 flex flex-col gap-10">
-                {
-                  posts.map((post:inpost)=>{
-                    return (
-                      <NewCard
-                        key={post.id}
-                        title={post.title}
-                        slug={post.slug}
-                        publishedDate={post.createdAt}
-                        description={post.description.text}
-                        autor={post.autor}
-                        imagem={post.ima}
-                        />
-                    )
-                  })
-                }
-              </div>
-              )
+          isLoading ? (
+            <div className="flex justify-center items-center m-[15rem]">
+              <CircularProgress/>
+            </div>
+          ):(
+            <div className="max-w-4xl mx-auto md:p-0 p-10 flex flex-col gap-10">
+            {
+              posts.map((post:inpost)=>{
+                return (
+                  <NewCard
+                    key={post.id}
+                    title={post.title}
+                    slug={post.slug}
+                    publishedDate={post.createdAt}
+                    description={post.description.text}
+                    autor={post.autor}
+                    imagem={post.ima}
+                    />
+                )
+              })
+            }
+          </div>
+          )
         }
+        <Footer/>
       </div>
     )
 }

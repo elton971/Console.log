@@ -2,15 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
+@layer base {
+    html {
+        font-family: Segoe UI;
+    }
+}
 .hoverLink
 {
     @apply  hover:text-red-500 transition-colors duration-200
 }
 
 .content p {
-    @apply my-5 text-[1.4rem] leading-relaxed
+    @apply my-5 text-base leading-relaxed
 }
 
 .content img {
@@ -25,7 +28,7 @@
     @apply px-4 py-2 rounded-md
 }
 .bordered{
-    @apply border mt-4 p-5  w-80  justify-center flex border-black
+    @apply border mt-4 p-2  justify-center flex border-black
 }
 
 .content pre[class*="language-"] {

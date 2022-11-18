@@ -1,12 +1,13 @@
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-
 import { SvgIcon } from '@mui/material';
+import {NavBar} from "../components/NavBar";
 
 export const About =()=>{
     return(
         <div className=" flex flex-wrap flex-col justify-center items-center px-28 my-10 gap-10">
+            <NavBar/>
             <div className=" ">
                 <figure >
                     <img src={"https://avatars.githubusercontent.com/u/82831720?v=4"} alt="foto do perfil" 

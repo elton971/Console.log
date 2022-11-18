@@ -1,10 +1,11 @@
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
-import { CircularProgress, Rating, Stack } from "@mui/material";
+import { CircularProgress} from "@mui/material";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { NavBar } from '../components/NavBar'
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import {Footer} from "../components/Footer";
 
 const client = new ApolloClient({
   uri:'https://api-us-west-2.hygraph.com/v2/cl7aqqsoz38nx01uhhqo5cbnn/master',
@@ -74,7 +75,7 @@ query dados{
                         </div>
                         <div className="flex justify-center items-center">
                           <div
-                              className="content  w-[80%] "
+                              className="content  w-[80%]  "
                               dangerouslySetInnerHTML={{ __html: post.content.html }}>
                           </div>
                         </div>
@@ -87,11 +88,6 @@ query dados{
                           <div className="mt-10">
                               <p className="text-lg">Classifique</p>
                           </div>
-                          <div className="mb-5">
-                              <Stack spacing={1}>
-                                  <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
-                              </Stack>
-                          </div>
                         </div>
                         
                     </div>
@@ -99,6 +95,7 @@ query dados{
             }
             
         </main>
+        <Footer/>
       </div>
     )
 }

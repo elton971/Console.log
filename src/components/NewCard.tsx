@@ -23,22 +23,22 @@ export const NewCard=( { title, publishedDate, description, slug,autor,imagem }:
         locale: ptBR,
     })
     return(
-        <div className="my-8 border-b-4 flex flex-col gap-2">
+        <div className=" border-b-4 flex flex-col gap-2 mt-2">
             <Link to={`/post/${slug}`}> 
-        	    <h1 className="text-4xl text-zinc-800 font-bold hoverLink">{title}</h1>
+        	    <h1 className="text-3xl text-zinc-800 font-bold hoverLink">{title}</h1>
             </Link>
-            <div className="text-gray-500">
-                <span className="">{ publishedDateFormatted.toUpperCase() }  - </span>
-                <span>{autor.toUpperCase()}</span>
+            <div className="text-gray-500 text-xs">
+                <span >{ publishedDateFormatted.toUpperCase() }  - </span>
+                <span >{autor.toUpperCase()}</span>
             </div>
             <div className="w-full h-60" >
                 <img src={imagem} alt="" className="h-60 w-full object-cover" />
             </div>
 
-            <p className="mt-2 text-gray-900 text-[1.2rem] ">{ description.substring(0, limit) + dotsOrEmpty }</p>
-            <div className="my-2 ">
+            <p className="mt-1 text-gray-900   text-base ">{ description.substring(0, limit) + dotsOrEmpty }</p>
+            <div className="my-1 ">
                 <Link to={`/post/${slug}`}>
-                        <span className="font-bold text-slate-900 text-[1.5rem]  text-xl hoverLink">Ler mais</span>
+                        <span className="font-semibold text-slate-900 text-base hoverLink">Ler mais</span>
                 </Link>
             </div>
             
