@@ -45,7 +45,7 @@
 }
 
 .content ol {
-    @apply list-decimal py-2 px-5 
+    @apply list-decimal py-2 px-5
 }
 
 .content li {

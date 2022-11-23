@@ -12,38 +12,16 @@ interface AuthProviderProps{
 }
 
 interface AuthContextData {
-    signed:boolean;
-    users:any;
-    signOut:()=>void;
-    createAccountEmainPass:(email:string,password:string)=>{};
+    createAccountEmainPass:(email:string,password:string)=>any;
     loginWithEmailPass:(email:string,password:string)=>any;
 }
 
 export const AuthGoogleContext = createContext({} as AuthContextData);
 
 export const AuthGoogleProvider = ({ children }:AuthProviderProps) => {
-    
 
   const auth = getAuth(app);
-  const [users, setUser] = useState<any>();
 
-
-  useEffect(() => {
-    const loadStorageData = () => {
-      const storageUser = localStorage.getItem("@AuthFirebase:user");
-      const storageToken = localStorage.getItem("@AuthFirebase:token");
-      if (storageToken && storageUser) {
-        setUser(storageUser);
-          console.log(users)
-      }
-    };
-    loadStorageData();
-  });
-
-  function signOut() {
-      localStorage.clear();
-    setUser(null);
-  }
   //==========================================
 
   //auth usando email e passs=======================================
@@ -93,9 +71,6 @@ export const AuthGoogleProvider = ({ children }:AuthProviderProps) => {
   return (
     <AuthGoogleContext.Provider
       value={{
-        signed: !!users,
-        users,
-        signOut,
         createAccountEmainPass,
         loginWithEmailPass
       }}

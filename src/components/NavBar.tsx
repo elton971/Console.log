@@ -4,16 +4,29 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import ListRoundedIcon from '@mui/icons-material/ListRounded';
-import React, { useContext } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import {AuthGoogleContext} from "../contextApi/Context";
 
 export const NavBar=()=>{
 
-    const {users,signOut}=useContext(AuthGoogleContext);
+    const [users, setUser] = useState<any>();
+
+    useEffect(() => {
+        const loadStorageData = () => {
+            const storageUser = localStorage.getItem("@AuthFirebase:user");
+            const storageToken = localStorage.getItem("@AuthFirebase:token");
+            if (storageToken && storageUser) {
+                setUser(storageUser);
+                console.log(users)
+            }
+        };
+        loadStorageData();
+    });
     function logOut()
     {
-        signOut();
+        localStorage.clear();
+        setUser(null);
     }
     return(
         <header className="bg-white text-black mb-2 border-b-2">
@@ -43,12 +56,17 @@ export const NavBar=()=>{
                                 </MenuItem>
                                 <MenuItem onClick={popupState.close}>
                                     <Link to="/contact">
-                                    Contact
+                                    Contacto
                                     </Link>
                                 </MenuItem>
                                 <MenuItem onClick={popupState.close}>
                                     <Link to="/login">
                                         Login
+                                    </Link>
+                                </MenuItem>
+                                <MenuItem onClick={popupState.close}>
+                                    <Link to="/singin">
+                                        Cadastrar
                                     </Link>
                                 </MenuItem>
                             </Menu>

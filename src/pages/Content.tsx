@@ -61,7 +61,7 @@ query dados{
     return(
       <div className="bg-[#ffffff] h-full min-h-screen">
         <NavBar/>
-        <main className="max-w-7xl mx-auto p-6 ">
+        <main className="max-w-7xl md:flex  md:justify-center ">
             {
                 
                 isLoading ? (
@@ -69,27 +69,25 @@ query dados{
                       <CircularProgress/>
                     </div>
                   ):(
-                    <div className="border-b-4 ">
+                    <div className=" w-[95%] md:w-[80%] pl-5">
                         <div className="flex justify-center">
                           <h1 className="font-bold text-[1.8rem]">{post.title}</h1>
                         </div>
                         <div className="flex justify-center items-center">
                           <div
-                              className="content  w-[80%]  "
+                              className="content  md:w-[80%]  "
                               dangerouslySetInnerHTML={{ __html: post.content.html }}>
+
                           </div>
                         </div>
 
-                        <div  className="ml-32">
-                          <div>
-                            <span className="text-red-600 font-bold">{date}</span>
-                            <p className="font-bold">Publicando por: <span className="text-red-900 font-mono">{post.autor}</span></p>
-                          </div>
-                          <div className="mt-10">
-                              <p className="text-lg">Classifique</p>
-                          </div>
+                        <div  className="md:mx-[6.5rem]">
+                            <div>
+                              <span className="text-red-600 font-bold">{date}</span>
+                              <p className="font-bold">Publicando por: <span className="text-red-900 font-mono">{post.autor}</span></p>
+                            </div>
                         </div>
-                        
+
                     </div>
                   )
             }

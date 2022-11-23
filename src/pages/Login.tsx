@@ -1,18 +1,44 @@
 import {Link, useNavigate} from 'react-router-dom';
-
 import { useContext, useState } from 'react';
 import { AuthGoogleContext } from '../contextApi/Context';
 import {NavBar} from "../components/NavBar";
 import {Footer} from "../components/Footer";
+import { validEmail, validPassword } from "../validator/Regex";
 
 export const Login=()=>{
 
     const {loginWithEmailPass}= useContext(AuthGoogleContext);
+
     const [email,setEmail]=useState('');
     const [passWord,setPassWord]=useState('');
-
+    const [emailErr, setEmailErr] = useState(false);
+    const [pwdError, setPwdError] = useState(false);
     const router=useNavigate();
-    const  login=async ()=>{
+
+    const validate = async () => {
+        if (!validEmail.test(email)) {
+            setEmailErr(true);
+
+        }
+
+        if (!validPassword.test(passWord)) {
+            setPwdError(true);
+        }
+
+
+        if (!emailErr && !pwdError)
+        {
+            login();
+        }
+        else
+        {
+            console.log("hello")
+
+        }
+    };
+
+    async function  login()
+    {
         let a= await loginWithEmailPass(email,passWord)
         console.log(a);
         if(a=="get")
@@ -20,7 +46,7 @@ export const Login=()=>{
             router("/")
         }
         else{
-            console.log("eroo");
+
         }
     }
 
@@ -35,7 +61,7 @@ export const Login=()=>{
                                 <p className={'text-3xl font-semibold'}>Login</p>
                             </h1>
                         </div>
-                        <form onSubmit={login}>
+                        <form>
                             <div className=" flex flex-col gap-1 mb-5">
                                 <label className="text-base font-semibold mb-1 " >Email</label>
                                 <input type="email" id="username" placeholder="exemplo@gmail.com"
@@ -43,6 +69,7 @@ export const Login=()=>{
                                        onChange={(e)=>{setEmail(e.target.value);}}
                                        formNoValidate
                                 />
+                                {emailErr && <li className={'text-red-900'}>Email invalido</li>}
                             </div>
 
                             <div className=" flex flex-col gap-1 mb-2">
@@ -52,10 +79,12 @@ export const Login=()=>{
                                     className=" border-2 p-2 rounded-md"
                                     onChange={(e)=>{setPassWord(e.target.value);}}
                                 />
+                                {pwdError && <li className={'text-red-900'}>A senha deve conter no minímo 6 digitos!</li>}
+                                {pwdError && <li className={'text-red-900'}>A senha deve conter no mínimo 1 número e 1 letra</li>}
                             </div>
 
                             <div className=" flex flex-col">
-                                <button type="button" onClick={()=>{login()}}
+                                <button type="button" onClick={()=>{validate()}}
                                         className="bordered text-white rounded-md border-none bg-[#2C974B]  transition" >
                                     Acessar
                                 </button>
@@ -65,7 +94,6 @@ export const Login=()=>{
                                         <Link to="/singIn" className="ml-2 text-blue-500"> Crie sua conta aqui.</Link>
                                     </p>
                                     <p className=" flex  justify-center text-sm">Esqueceu sua senha?
-
                                         <Link to="/singIn" className="ml-2 text-blue-500"> Clique aqui.</Link>
                                     </p>
                                 </div>

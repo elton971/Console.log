@@ -69,7 +69,7 @@ export function Home() {
               <CircularProgress/>
             </div>
           ):(
-            <div className="max-w-4xl mx-auto md:p-0 p-10 flex flex-col gap-10">
+            <div className="max-w-4xl mx-auto md:p-0 p-5 flex flex-col gap-10">
             {
               posts.map((post:inpost)=>{
                 return (
