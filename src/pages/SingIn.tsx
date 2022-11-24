@@ -4,6 +4,7 @@ import { useContext, useState } from 'react';
 import { AuthGoogleContext } from '../contextApi/Context';
 import {NavBar} from "../components/NavBar";
 import {Footer} from "../components/Footer";
+import AppBarComponent from "../components/AppBar";
 
 export const SingIn=()=>{
 
@@ -30,8 +31,8 @@ export const SingIn=()=>{
 
     return(
         <div >
-            <NavBar/>
-            <div className="flex justify-center ">
+            <AppBarComponent/>
+            <div className="flex justify-center mt-[5rem] md:mt-[5rem] ">
                 <div className=" my-9 w-[40rem]">
                     <div  className={"p-5"}>
                     <div className="mb-2">

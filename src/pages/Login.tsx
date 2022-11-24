@@ -4,6 +4,7 @@ import { AuthGoogleContext } from '../contextApi/Context';
 import {NavBar} from "../components/NavBar";
 import {Footer} from "../components/Footer";
 import { validEmail, validPassword } from "../validator/Regex";
+import AppBarComponent from "../components/AppBar";
 
 export const Login=()=>{
 
@@ -52,8 +53,8 @@ export const Login=()=>{
 
     return(
         <div >
-            <NavBar/>
-            <div className="flex justify-center  ">
+            <AppBarComponent/>
+            <div className="flex justify-center mt-[5rem] md:mt-[5rem] ">
                 <div className=" my-9 w-[40rem]">
                     <div className={"p-5 "}>
                         <div className="mb-10">

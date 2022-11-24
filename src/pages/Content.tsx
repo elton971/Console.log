@@ -6,6 +6,7 @@ import { NavBar } from '../components/NavBar'
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {Footer} from "../components/Footer";
+import AppBarComponent from "../components/AppBar";
 
 const client = new ApolloClient({
   uri:'https://api-us-west-2.hygraph.com/v2/cl7aqqsoz38nx01uhhqo5cbnn/master',
@@ -60,8 +61,8 @@ query dados{
   
     return(
       <div className="bg-[#ffffff] h-full min-h-screen">
-        <NavBar/>
-        <main className="max-w-7xl md:flex  md:justify-center ">
+        <AppBarComponent/>
+        <main className="max-w-7xl md:flex  md:justify-center  mt-[5rem] md:mt-[5rem]">
             {
                 
                 isLoading ? (

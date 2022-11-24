@@ -50,8 +50,11 @@ export const AuthGoogleProvider = ({ children }:AuthProviderProps) => {
       // Signed in
       const user = userCredential.user;
 
-      localStorage.setItem("@AuthFirebase:user",String(user.email));
+      localStorage.setItem("@AuthFirebase:name",String(user.displayName));
+      localStorage.setItem("@AuthFirebase:image",user.photoURL);
+      localStorage.setItem("@AuthFirebase:email",String(user.email));
       localStorage.setItem("@AuthFirebase:token",String(user.refreshToken));
+
       if(user)
       {
          val= "get";

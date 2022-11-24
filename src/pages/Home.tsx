@@ -6,6 +6,7 @@ import { NewCard } from '../components/NewCard';
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client"
 import {Slide} from "../components/Slide";
 import {Footer} from "../components/Footer";
+import AppBarComponent from "../components/AppBar";
 
 interface inpost{
   id: string
@@ -62,14 +63,14 @@ export function Home() {
 
     return(
       <div className=" h-full min-h-screen ">
-        <NavBar/>
+        <AppBarComponent/>
         {
           isLoading ? (
             <div className="flex justify-center items-center m-[15rem]">
               <CircularProgress/>
             </div>
           ):(
-            <div className="max-w-4xl mx-auto md:p-0 p-5 flex flex-col gap-10">
+            <div className="max-w-4xl mx-auto md:p-0 p-5 flex flex-col gap-10 mt-[2.5rem] md:mt-[5rem]">
             {
               posts.map((post:inpost)=>{
                 return (
