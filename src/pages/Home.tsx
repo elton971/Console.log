@@ -1,7 +1,6 @@
 
 import { CircularProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { NavBar } from '../components/NavBar'
 import { NewCard } from '../components/NewCard';
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client"
 import {Slide} from "../components/Slide";

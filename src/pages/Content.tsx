@@ -2,7 +2,6 @@ import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
 import { CircularProgress} from "@mui/material";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { NavBar } from '../components/NavBar'
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {Footer} from "../components/Footer";

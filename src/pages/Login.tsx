@@ -1,7 +1,6 @@
 import {Link, useNavigate} from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { AuthGoogleContext } from '../contextApi/Context';
-import {NavBar} from "../components/NavBar";
 import {Footer} from "../components/Footer";
 import { validEmail, validPassword } from "../validator/Regex";
 import AppBarComponent from "../components/AppBar";

@@ -2,7 +2,6 @@
 import { useNavigate} from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { AuthGoogleContext } from '../contextApi/Context';
-import {NavBar} from "../components/NavBar";
 import {Footer} from "../components/Footer";
 import AppBarComponent from "../components/AppBar";
 
