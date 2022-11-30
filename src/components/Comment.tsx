@@ -11,7 +11,7 @@ export const Comment=(props:any)=> {
     return (
         <div>
             {
-                props.comment.map((element:string,index)=>{
+                props.comment.map((element:string,index:number)=>{
                     return(
                         <div className={'flex mb-5'} key={index}>
                             <div>
