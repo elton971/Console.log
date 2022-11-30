@@ -25,7 +25,7 @@ export const NewCard=( { title, publishedDate, description, slug,autor,imagem }:
     return(
         <div className=" border-b-4 flex flex-col gap-2 mt-2">
             <Link to={`/post/${slug}`}> 
-        	    <h1 className="text-3xl text-zinc-800 font-bold hoverLink">{title}</h1>
+        	    <h1 className="font-semibold text-[32px] text-zinc-800 hoverLink">{title}</h1>
             </Link>
             <div className="text-gray-500 text-xs">
                 <span >{ publishedDateFormatted.toUpperCase() }  - </span>

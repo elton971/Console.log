@@ -13,13 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import CopyrightIcon from '@mui/icons-material/Copyright';
 import {Link} from "react-router-dom";
-import {useEffect, useState} from "react";
-import PopupState, {bindMenu, bindTrigger} from "material-ui-popup-state";
-import {SvgIcon} from "@mui/material";
-import ListRoundedIcon from "@mui/icons-material/ListRounded";
-
-const pages = ['Home', 'Contacto'];
-const settings = ['Publicar', 'Logout'];
+import PopupState from "material-ui-popup-state";
+import {AuthGoogleContext} from "../contextApi/Context";
+import {useContext} from "react";
 
 function AppBarComponent() {
 
@@ -32,28 +28,8 @@ function AppBarComponent() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+    const { image,name,user,setUser}=useContext(AuthGoogleContext);
 
-    const [user, setUser] = useState<any>();
-    const [image, setImage] = useState<any>();
-    const [name, setName] = useState<any>();
-
-
-    useEffect(() => {
-        const loadStorageData = () => {
-            const storageEmail = localStorage.getItem("@AuthFirebase:email");
-            const storageToken = localStorage.getItem("@AuthFirebase:token");
-            const storageName = localStorage.getItem("@AuthFirebase:name");
-            const storageImage = localStorage.getItem("@AuthFirebase:image");
-
-            if (storageToken && storageEmail) {
-                setUser(storageEmail);
-                setImage(storageImage);
-                setName(storageName)
-                console.log(user)
-            }
-        };
-        loadStorageData();
-    });
     function logOut()
     {
         localStorage.clear();

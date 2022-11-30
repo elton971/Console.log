@@ -1,8 +1,11 @@
 export const Footer=()=>{
     return(
-        <div>
-            <div className={'flex justify-center items-center h-[5rem] border-t-2 mt-2'}>
-                <p>© 2022 Console.log</p>
+        <div className={' flex justify-center items-center h-[5rem] mt-2 '}>
+            <div className={'sticky bottom-0  w-[50rem]  '}>
+                <div className={' flex justify-center items-center h-[5rem] mt-2 border-t-2 '}>
+                    <p>© 2022 Console.log</p>
+                </div>
+
             </div>
         </div>
     )

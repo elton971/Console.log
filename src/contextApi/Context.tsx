@@ -6,7 +6,6 @@ import { app } from "../components/FireBase";
 
 const provider = new GoogleAuthProvider();
 
-
 interface AuthProviderProps{
     children:ReactNode;
 }
@@ -14,6 +13,11 @@ interface AuthProviderProps{
 interface AuthContextData {
     createAccountEmainPass:(email:string,password:string)=>any;
     loginWithEmailPass:(email:string,password:string)=>any;
+    setUser:(val:any)=>void;
+    user:any;
+    image:any;
+    name:any;
+
 }
 
 export const AuthGoogleContext = createContext({} as AuthContextData);
@@ -40,7 +44,6 @@ export const AuthGoogleProvider = ({ children }:AuthProviderProps) => {
     });
     
   }
-
 
    async function loginWithEmailPass(email: string,password: string)
   {
@@ -70,12 +73,38 @@ export const AuthGoogleProvider = ({ children }:AuthProviderProps) => {
   }
 
 
+  const [user, setUser] = useState<any>();
+  const [image, setImage] = useState<any>();
+  const [name, setName] = useState<any>();
+
+  useEffect(() => {
+    const loadStorageData = () => {
+        const storageEmail = localStorage.getItem("@AuthFirebase:email");
+        const storageToken = localStorage.getItem("@AuthFirebase:token");
+        const storageName = localStorage.getItem("@AuthFirebase:name");
+        const storageImage = localStorage.getItem("@AuthFirebase:image");
+
+        if (storageToken && storageEmail) {
+            setUser(storageEmail);
+            setImage(storageImage);
+            setName(storageName)
+            console.log(user)
+        }
+    };
+    loadStorageData();
+});
+
+
   //===============================================================
   return (
     <AuthGoogleContext.Provider
       value={{
-        createAccountEmainPass,
-        loginWithEmailPass
+          createAccountEmainPass,
+          loginWithEmailPass,
+          setUser,
+          user,
+          image,
+          name
       }}
     >
       {children}

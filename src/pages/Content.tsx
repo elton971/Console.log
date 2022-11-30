@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {Footer} from "../components/Footer";
 import AppBarComponent from "../components/AppBar";
+import {Comment} from "../components/Comment";
 
 const client = new ApolloClient({
   uri:'https://api-us-west-2.hygraph.com/v2/cl7aqqsoz38nx01uhhqo5cbnn/master',
@@ -15,6 +16,8 @@ const client = new ApolloClient({
 export const Content=()=>{
   const [isLoading, setIsLoading] = useState(false)
   const [date,setDate]=useState<any>()
+    const [newComment,setNewComment]=useState<any>()
+    const { name } = useParams()
 
   const [post,setPost]=useState({
     autor:"",
@@ -22,9 +25,14 @@ export const Content=()=>{
       html:""
     },
     createdAt:"",
-    title: ""
+    title: "",
+      comments:[
+          {
+              content:[]
+          }
+      ]
   });
-  const { name } = useParams()
+
 
 
 const GET_POSTS_QUERY=gql`
@@ -36,11 +44,26 @@ query dados{
     }
     createdAt
     title
+    comments {
+      content
+    }
     
   }
 }
 `
-  
+
+    const CreateNewComment=gql`
+        mutation {
+          createComment(
+            data: {id_post: {connect: {Post: {slug: "${name}"}}}, content:"${[post.comments[0].content,newComment]}"}
+          ) {
+            content
+
+          }
+        }
+    `
+
+
   useEffect(() => {
     setIsLoading(true)
     const fetchProducts = async () => {
@@ -56,8 +79,10 @@ query dados{
     fetchProducts();
   }, []);
   
-    
-  
+    const newComments = async () => {
+        // const  data  = await client.mutate(CreateNewComment,CreateNewComment,CreateNewComment);
+    };
+
     return(
       <div className="bg-[#ffffff] h-full min-h-screen">
         <AppBarComponent/>
@@ -69,19 +94,46 @@ query dados{
                       <CircularProgress/>
                     </div>
                   ):(
-                    <div className=" w-[95%] md:w-[80%] pl-5">
-                        <div className="flex justify-center">
-                          <h1 className="font-bold text-[1.8rem]">{post.title}</h1>
-                        </div>
-                        <div className="flex justify-center items-center">
+                    <div className=" md:w-[65%] p-3">
+                        <div className="flex justify-center flex-col border-dotted border-l-2 border-l-neutral-500 p-5">
+                          <div className="">
+                            <h1 className="font-semibold text-[32px]">{post.title}</h1>
+                          </div>
                           <div
-                              className="content  md:w-[80%]  "
+                              className="content "
                               dangerouslySetInnerHTML={{ __html: post.content.html }}>
+                          </div>
 
+                          <div className={'md:ml-24 md:mt-10 '}>
+
+                              {
+                                  post.comments.map(({content},index)=>{
+                                      return (<div><Comment key={index} comment={content}/></div>)
+                                  })
+                              }
+
+                            <div className={'border-2  p-5'}>
+                              <textarea rows={5} placeholder={'Comentario'} className={'w-full outline-none'}
+                              onChange={(e)=>{setNewComment(e.target.value)}}
+                              >
+
+                              </textarea>
+                            </div>
+                            <div className={'flex justify-end gap-2 py-2'}>
+                              <button className={'p-2 bg-gray-100 w-20 rounded-xl'}>Limpar</button>
+                              <button className={'p-2 bg-green-900 w-20 text-white rounded-xl'}
+                                onClick={newComments}
+                              >
+                                  Publicar
+                              </button>
+                            </div>
+                          </div>
+                          <div>
+                            <p  className={'text-gray-600'}>Bibliografias:</p>
                           </div>
                         </div>
 
-                        <div  className="md:mx-[6.5rem]">
+                        <div  className="">
                             <div>
                               <span className="text-red-600 font-bold">{date}</span>
                               <p className="font-bold">Publicando por: <span className="text-red-900 font-mono">{post.autor}</span></p>

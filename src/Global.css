@@ -13,8 +13,13 @@
 }
 
 .content p {
-    @apply my-5 text-base leading-relaxed
+    @apply my-5 text-base leading-relaxed text-[#24292F] underline-offset-8
 }
+
+.content p strong {
+    @apply my-5 text-[20px] leading-relaxed text-black font-semibold
+}
+
 
 .content img {
     @apply max-h-[70vh] w-auto mx-auto my-4
