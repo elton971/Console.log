@@ -49,6 +49,7 @@ export const Content=()=>{
 	
 	const handleSubmit =async ()=>{
 		await createC({});
+		window.location.reload();
 		
 	}
 	
