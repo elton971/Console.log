@@ -2,7 +2,7 @@ import {gql, useMutation} from "@apollo/client";
 import { CircularProgress} from "@mui/material";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import {FormEvent, useCallback, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import {Footer} from "../components/Footer";
 import AppBarComponent from "../components/AppBar";
@@ -14,7 +14,6 @@ import {Client} from "../service/ApolloService";
 
 export const Content=()=>{
 	
-
 	const [isLoading, setIsLoading] = useState(false)
 	const [date,setDate]=useState<any>()
 	const [newComment,setNewComment]=useState('')
@@ -82,8 +81,8 @@ export const Content=()=>{
 		fetchProducts();
 	}, []);
 	
-	if (loading) return 'Submitting...';
-	if (error) return `Submission error! ${error.message}`;
+	// if (loading) return 'Submitting...';
+	// if (error) return `Submission error! ${error.message}`;
 	return(
 		<div className="bg-[#ffffff] h-full min-h-screen">
 			<AppBarComponent/>

@@ -1,4 +1,4 @@
-import {Fragment} from 'react'
+import React, {Fragment} from 'react'
 import { Route, Routes,BrowserRouter } from 'react-router-dom';
 import { About } from '../pages/About';
 import { Content } from '../pages/Content';
