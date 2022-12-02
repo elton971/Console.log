@@ -6,6 +6,7 @@ import { ApolloClient, gql, InMemoryCache } from "@apollo/client"
 import {Slide} from "../components/Slide";
 import {Footer} from "../components/Footer";
 import AppBarComponent from "../components/AppBar";
+import {Client} from "../service/ApolloService";
 
 interface inpost{
   id: string
@@ -19,12 +20,14 @@ interface inpost{
   ima:string
 }
 
-const client = new ApolloClient({
-  uri:'https://api-us-west-2.hygraph.com/v2/cl7aqqsoz38nx01uhhqo5cbnn/master',
-  cache: new InMemoryCache()
-})
 
-const GET_POSTS_QUERY=gql`
+
+
+
+export function Home() {
+  
+  
+  const GET_POSTS_QUERY=gql`
 query dados{
   posts(orderBy: publishedAt_DESC) {
     createdAt
@@ -42,16 +45,13 @@ query dados{
 }
 
 `
-
-export function Home() {
-
   const [posts, setPosts] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     setIsLoading(true)
     const fetchProducts = async () => {
-    const  data  = await client.query({
+    const  data  = await Client.query({
         query: GET_POSTS_QUERY,
       });
       setIsLoading(false)
@@ -71,10 +71,10 @@ export function Home() {
           ):(
             <div className="max-w-4xl mx-auto md:p-0 p-5 flex flex-col gap-10 mt-[2.5rem] md:mt-[5rem]">
             {
-              posts.map((post:inpost)=>{
+              posts.map((post:inpost,index:number)=>{
                 return (
                   <NewCard
-                    key={post.id}
+                    key={index}
                     title={post.title}
                     slug={post.slug}
                     publishedDate={post.createdAt}
