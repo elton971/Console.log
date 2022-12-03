@@ -12,14 +12,19 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import CopyrightIcon from '@mui/icons-material/Copyright';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import PopupState from "material-ui-popup-state";
 import {AuthGoogleContext} from "../contextApi/Context";
 import {useContext} from "react";
+import {useAuth} from "../hook/useAuth";
+import { getAuth, signOut } from "firebase/auth";
 
 function AppBarComponent() {
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const router=useNavigate();
+    const { user } = useAuth()
+    console.log("User", user)
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
@@ -28,14 +33,18 @@ function AppBarComponent() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
-    const { image,name,user,setUser}=useContext(AuthGoogleContext);
+    
 
-    function logOut()
-    {
-        localStorage.clear();
-        setUser(null);
+    const logOut = () => {
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            router("/")
+            
+        }).catch((error) => {
+            console.log("Signout")
+        });
     }
-
+    
     return (
         <AppBar position="fixed">
             <Container maxWidth="xl">
@@ -68,7 +77,7 @@ function AppBarComponent() {
                                             <React.Fragment>
                                                 <Tooltip title="Open settings">
                                                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                                        <Avatar  src={`${image}`} />
+                                                        <Avatar  src={`${user.avatar}`} />
                                                     </IconButton>
                                                 </Tooltip>
                                                 <Menu

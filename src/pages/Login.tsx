@@ -4,52 +4,47 @@ import { AuthGoogleContext } from '../contextApi/Context';
 import {Footer} from "../components/Footer";
 import { validEmail, validPassword } from "../validator/Regex";
 import AppBarComponent from "../components/AppBar";
+import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import {app} from "../service/FireBase";
 
 export const Login=()=>{
-
-    const {loginWithEmailPass}= useContext(AuthGoogleContext);
-
+    
     const [email,setEmail]=useState('');
     const [passWord,setPassWord]=useState('');
     const [emailErr, setEmailErr] = useState(false);
     const [pwdError, setPwdError] = useState(false);
     const router=useNavigate();
+    
+    const auth = getAuth(app);
 
     const validate = async () => {
         if (!validEmail.test(email)) {
             setEmailErr(true);
-
         }
-
         if (!validPassword.test(passWord)) {
             setPwdError(true);
         }
-
-
         if (!emailErr && !pwdError)
         {
             login();
         }
-        else
-        {
-            console.log("hello")
-
-        }
+        
     };
-
     async function  login()
     {
-        let a= await loginWithEmailPass(email,passWord)
-        console.log(a);
-        if(a=="get")
-        {
+        signInWithEmailAndPassword(auth, email, passWord)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user
             router("/")
-        }
-        else{
-
-        }
+            return user
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
     }
-
+    
     return(
         <div >
             <AppBarComponent/>

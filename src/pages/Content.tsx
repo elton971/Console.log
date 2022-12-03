@@ -15,8 +15,10 @@ import {Client} from "../service/ApolloService";
 export const Content=()=>{
 	
 	const [isLoading, setIsLoading] = useState(false)
+	const [send, setSend] = useState(false)
 	const [date,setDate]=useState<any>()
 	const [newComment,setNewComment]=useState('')
+	const [newCommentsafe,setNewCommentSafe]=useState<any>([])
 	const { name } = useParams()
 	
 	const CreateNewComment=gql`
@@ -48,9 +50,9 @@ export const Content=()=>{
 	`
 	
 	const handleSubmit =async ()=>{
+		setNewCommentSafe([...newCommentsafe,newComment])
+		setSend(true);
 		await createC({});
-		window.location.reload();
-		
 	}
 	
 	
@@ -82,7 +84,7 @@ export const Content=()=>{
 		fetchProducts();
 	}, []);
 	
-	// if (loading) return 'Submitting...';
+	// if () return 'Submitting...';
 	// if (error) return `Submission error! ${error.message}`;
 	return(
 		<div className="bg-[#ffffff] h-full min-h-screen">
@@ -111,21 +113,30 @@ export const Content=()=>{
 										post.comments.map(({content},index)=>{
 											return (<div><Comment key={index} comment={content}/></div>)
 										})
+										
+									}
+									{
+										send ? ( <div><Comment key={1} comment={newCommentsafe}/></div>): ("")
+										
+										
 									}
 									
 									<div className={'border-2  p-5'}>
-	                          <textarea rows={5} placeholder={'Comentario'} className={'w-full outline-none'}
-	                                    onChange={(e)=>{setNewComment(e.target.value)}}
-	                          >
-	
-	                          </textarea>
+				                          <textarea rows={5} placeholder={'Comentario'} className={'w-full outline-none'}
+				                                    onChange={(e)=>{setNewComment(e.target.value)}}
+				                          >
+				
+				                          </textarea>
 									</div>
 									<div className={'flex justify-end gap-2 py-2'}>
 										<button className={'p-2 bg-gray-100 w-20 rounded-xl'}>Limpar</button>
-										<button className={'p-2 bg-green-900 w-20 text-white rounded-xl'}
+										<button className={'p-2 bg-green-900 w-20 text-white rounded-xl flex justify-center items-center'}
 										        onClick={handleSubmit}
 										>
-											Publicar
+											{
+											    loading ? ( <CircularProgress size={15} />): ("Publicar")
+											}
+											
 										</button>
 									</div>
 								</div>

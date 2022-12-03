@@ -4,24 +4,36 @@ import { useContext, useState } from 'react';
 import { AuthGoogleContext } from '../contextApi/Context';
 import {Footer} from "../components/Footer";
 import AppBarComponent from "../components/AppBar";
+import {createUserWithEmailAndPassword, getAuth} from "firebase/auth";
+import {app} from "../service/FireBase";
 
 export const SingIn=()=>{
-
-    const {createAccountEmainPass}=useContext(AuthGoogleContext);
+    
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const [reapetPassword,setRepeatPassWord]=useState('');
 
     const [control,setControl]=useState(false);
     const router=useNavigate();
-
-    const test=()=>{
+    const auth = getAuth(app);
+    
+    async function createAccountEmainPass() {
         if(password==reapetPassword)
         {
-            if(createAccountEmainPass(email,password))
-            {
+            await createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
                 router("/login")
-            }
+                return user;
+        
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+            });
         }
         else{
             setControl(true);
@@ -37,7 +49,7 @@ export const SingIn=()=>{
                     <div className="mb-2">
                         <h1 className="text-4xl font-bold mb-5">Cadastro</h1>
                     </div>
-                    <form onSubmit={test}>
+                    <form onSubmit={createAccountEmainPass}>
                         <div className=" flex flex-col gap-1 mb-5">
                             <label className="text-base font-semibold mb-1 " >Email</label>
                             <input type="email" id="username" placeholder="exemplo@gmail.com"
@@ -65,7 +77,7 @@ export const SingIn=()=>{
                             />
                         </div>
                         <div className={'flex flex-col'}>
-                        <button type="button" onClick={test}
+                        <button type="button" onClick={createAccountEmainPass}
                                 className="bordered text-white rounded-md border-none bg-[#2C974B]  transition">
                             Cadastrar
                         </button>
