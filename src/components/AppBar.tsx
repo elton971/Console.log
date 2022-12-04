@@ -5,17 +5,13 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import CopyrightIcon from '@mui/icons-material/Copyright';
 import {Link, useNavigate} from "react-router-dom";
 import PopupState from "material-ui-popup-state";
-import {AuthGoogleContext} from "../contextApi/Context";
-import {useContext} from "react";
 import {useAuth} from "../hook/useAuth";
 import { getAuth, signOut } from "firebase/auth";
 
@@ -23,25 +19,22 @@ function AppBarComponent() {
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const router=useNavigate();
-    const { user } = useAuth()
-    console.log("User", user)
-
+    const { user, setUser} = useAuth()
+    
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
-
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
     
-
     const logOut = () => {
         const auth = getAuth();
         signOut(auth).then(() => {
+            setUser(null);
             router("/")
-            
         }).catch((error) => {
-            console.log("Signout")
+        
         });
     }
     

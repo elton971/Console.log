@@ -155,7 +155,6 @@ export const Content=()=>{
 						</div>
 					)
 				}
-			
 			</main>
 			<Footer/>
 		</div>

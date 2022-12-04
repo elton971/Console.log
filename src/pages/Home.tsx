@@ -7,6 +7,9 @@ import {Slide} from "../components/Slide";
 import {Footer} from "../components/Footer";
 import AppBarComponent from "../components/AppBar";
 import {Client} from "../service/ApolloService";
+import {getAuth} from "firebase/auth";
+import {app} from "../service/FireBase";
+import {useAuth} from "../hook/useAuth";
 
 interface inpost{
   id: string
@@ -19,10 +22,6 @@ interface inpost{
   autor:string
   ima:string
 }
-
-
-
-
 
 export function Home() {
   
@@ -47,6 +46,8 @@ query dados{
 `
   const [posts, setPosts] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false)
+  const auth = getAuth(app);
+  const { setUser} = useAuth()
 
   useEffect(() => {
     setIsLoading(true)
@@ -59,6 +60,22 @@ query dados{
     }
     fetchProducts();
   }, []);
+  
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      if (user) {
+        const { displayName, photoURL, uid } = user
+        setUser({
+          id: uid,
+          name: displayName,
+          avatar: photoURL
+        })
+      }
+    })
+    return () => {
+      unsubscribe()
+    }
+  }, [])
 
     return(
       <div className=" h-full min-h-screen ">
