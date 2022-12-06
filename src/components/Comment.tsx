@@ -12,7 +12,8 @@ export const Comment=(props:any)=> {
 	return (
 		<div>
 			{
-				props.comment.map((element:string,index:number)=>{
+				props.comment.map((element:any,index:number)=>{
+					
 					return(
 						<div className={'flex mb-5'} key={index}>
 							<div>
@@ -23,8 +24,8 @@ export const Comment=(props:any)=> {
 								</Tooltip>
 							</div>
 							<div>
-								<p className={'text-[1rem]'}>{user ? user.name : "Anonimo"}</p>
-								<p className={'text-gray-400'}>{element}</p>
+								<p className={'text-[1rem]'}>{props.userName }</p>
+								<p className={'text-gray-400'}>{element.newComment ? element : element}</p>
 							</div>
 						</div>
 					)

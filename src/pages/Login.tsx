@@ -6,17 +6,30 @@ import { validEmail, validPassword } from "../validator/Regex";
 import AppBarComponent from "../components/AppBar";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import {app} from "../service/FireBase";
+import {gql} from "@apollo/client";
+import {Client} from "../service/ApolloService";
+import {useAuth} from "../hook/useAuth";
 
 export const Login=()=>{
+    
+   
     
     const [email,setEmail]=useState('');
     const [passWord,setPassWord]=useState('');
     const [emailErr, setEmailErr] = useState(false);
     const [pwdError, setPwdError] = useState(false);
     const router=useNavigate();
-    
     const auth = getAuth(app);
-
+    const{setUserName}=useAuth();
+    
+    const GET_USER_QUERY=gql`
+        query {
+          userRegistereds(where: {email:"${email}"}) {
+            email
+            userName
+          }
+        }
+    `
     const validate = async () => {
         if (!validEmail.test(email)) {
             setEmailErr(true);
@@ -36,6 +49,7 @@ export const Login=()=>{
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user
+            fetchProducts();
             router("/")
             return user
         })
@@ -44,6 +58,14 @@ export const Login=()=>{
             const errorMessage = error.message;
         });
     }
+    const fetchProducts = async () => {
+        const  data  = await Client.query({
+            query: GET_USER_QUERY,
+        });
+        console.log(data.data.userRegistereds[0].userName);
+        setUserName(data.data.userRegistereds[0].userName);
+    }
+    
     
     return(
         <div >

@@ -6,17 +6,27 @@ import {Footer} from "../components/Footer";
 import AppBarComponent from "../components/AppBar";
 import {createUserWithEmailAndPassword, getAuth} from "firebase/auth";
 import {app} from "../service/FireBase";
+import {gql, useMutation} from "@apollo/client";
 
 export const SingIn=()=>{
     
     const [email,setEmail]=useState('');
+    const [userName,setUserName]=useState('');
     const [password,setPassword]=useState('');
     const [reapetPassword,setRepeatPassWord]=useState('');
-
-    const [control,setControl]=useState(false);
     const router=useNavigate();
     const auth = getAuth(app);
     
+    const CreateUser=gql`
+        mutation {
+            createUserRegistered(data: {userName: "${userName}", email: "${email}"}) {
+                email
+                userName
+            }
+        }
+    `
+    
+    const [createUser, { data, loading, error }] = useMutation(CreateUser);
     async function createAccountEmainPass() {
         if(password==reapetPassword)
         {
@@ -24,6 +34,7 @@ export const SingIn=()=>{
             .then((userCredential) => {
                 // Signed in
                 const user = userCredential.user;
+                handleSubmit();
                 router("/login")
                 return user;
         
@@ -35,9 +46,11 @@ export const SingIn=()=>{
                 // ..
             });
         }
-        else{
-            setControl(true);
-        }
+    }
+    
+    const handleSubmit =async ()=>{
+        
+        await createUser({});
     }
 
     return(
@@ -52,13 +65,21 @@ export const SingIn=()=>{
                     <form onSubmit={createAccountEmainPass}>
                         <div className=" flex flex-col gap-1 mb-5">
                             <label className="text-base font-semibold mb-1 " >Email</label>
-                            <input type="email" id="username" placeholder="exemplo@gmail.com"
+                            <input type="email" id="email" placeholder="exemplo@gmail.com"
                                    className=" border-2 p-2 rounded-md  "
                                    onChange={(e)=>{setEmail(e.target.value);}}
                                    formNoValidate
                             />
                         </div>
-
+    
+                        <div className=" flex flex-col gap-1 mb-5">
+                            <label className="text-base font-semibold mb-1 " >User Name</label>
+                            <input type="text" id="username" placeholder="Manuel23"
+                                   className=" border-2 p-2 rounded-md  "
+                                   onChange={(e)=>{setUserName(e.target.value);}}
+                            />
+                        </div>
+                        
                         <div className=" flex flex-col gap-1 mb-2">
                             <label className="text-base font-semibold">Password</label>
 

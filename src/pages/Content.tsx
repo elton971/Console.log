@@ -8,6 +8,7 @@ import {Footer} from "../components/Footer";
 import AppBarComponent from "../components/AppBar";
 import {Comment} from "../components/Comment";
 import {Client} from "../service/ApolloService";
+import {useAuth} from "../hook/useAuth";
 //import {CreateNewComment} from "../service/Mutation";
 
 
@@ -20,11 +21,14 @@ export const Content=()=>{
 	const [newComment,setNewComment]=useState('')
 	const [newCommentsafe,setNewCommentSafe]=useState<any>([])
 	const { name } = useParams()
+	const {userName}=useAuth();
+	console.log(userName)
 	
 	const CreateNewComment=gql`
 	mutation {
-	  createComment(data: {id_post: {connect: {Post: {slug: "${name}"}}}, content:["${newComment}"] }) {
+	  createComment(data: {id_post: {connect: {Post: {slug: "${name}"}}}, content:["${newComment}"],userName: "${userName}" }) {
 	    content
+	    userName
 	  }
 	}
 `
@@ -43,6 +47,7 @@ export const Content=()=>{
 				title
 				comments {
 				  content
+				  userName
 				}
 			
 			}
@@ -65,7 +70,8 @@ export const Content=()=>{
 		title: "",
 		comments:[
 			{
-				content:[]
+				content:[],
+				userName:""
 			}
 		]
 	});
@@ -110,13 +116,14 @@ export const Content=()=>{
 								<div className={'md:ml-24 md:mt-10 '}>
 									
 									{
-										post.comments.map(({content},index)=>{
-											return (<div><Comment key={index} comment={content}/></div>)
+										post.comments.map(({content,userName},index)=>{
+											console.log(userName)
+											return (<div><Comment key={index} comment={content} userName={userName}/></div>)
 										})
 										
 									}
 									{
-										send ? ( <div><Comment key={1} comment={newCommentsafe}/></div>): ("")
+										send ? ( <div><Comment key={1} comment={newCommentsafe} userName={userName}/></div>): ("")
 										
 										
 									}
